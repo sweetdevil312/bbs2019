@@ -7,7 +7,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <script src="/js/jquery-3.2.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <title>Lhfly ›头像上传</title>
+    <title>V2Explore ›头像上传</title>
 </head>
 <body>
 <!-- 引入header文件 -->
@@ -16,7 +16,7 @@
 <div style="width: 70%;margin:1% 2% 1% 5%;float: left;">
     <div class="panel panel-default" id="main" style="">
         <div class="panel-heading" style="background-color: white">
-            <a href="/">Lhfly</a> › 设置 ›头像上传
+            <a href="/">V2Explore</a> › 设置 ›头像上传
         </div>
 
         <div class="panel-body">

@@ -50,7 +50,7 @@ a{
     <div class="container">
         V2Explore是一个有趣的社区，欢迎大家在此分享见解
         <br/><br/><br/>
-        <p>Designed by </span> lhf2018</p>
+        <p>Designed by </span> WCCN</p>
     </div>
     <div class="info">
         <p style="text-align: center;font-size: 16px;">统计信息</p>
