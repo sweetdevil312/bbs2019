@@ -66,7 +66,7 @@
             <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名" required="required">
         </div>
         <div class="form-group">
-            <label for="password">密码</label>
+            <label for="passwd">密码</label>
             <input type="password" class="form-control" id="passwd" name="password" placeholder="请输入密码" required="required">
         </div>
         <div class="checkbox text-left">

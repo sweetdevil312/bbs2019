@@ -47,8 +47,8 @@ public class UserController {
         //新建user对象
         User user=new User();
         String phoneNum=request.getParameter("tel");
-        String areaCode=request.getParameter("areaCode");
-        String phone=areaCode+phoneNum;
+        //String areaCode=request.getParameter("areaCode");
+        String phone=phoneNum;
         //用户类型
         Byte type=new Byte("0");
         //密码加密处理

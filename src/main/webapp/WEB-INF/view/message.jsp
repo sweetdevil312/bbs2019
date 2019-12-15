@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="pageDiv" align="center" style="display:block;">
-        <%@include file="../jsp/page.jsp" %>
+        <%@include file="../view/page.jsp" %>
     </div>
 </div>
 <div align="center" style="display:block;float: right;margin-right: 30px">

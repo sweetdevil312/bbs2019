@@ -22,7 +22,7 @@
     <!-- 使用jsp作为视图-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:viewClass="org.springframework.web.servlet.view.JstlView"
-          p:prefix="/WEB-INF/jsp/"
+          p:prefix="/WEB-INF/view/"
           p:suffix=".jsp"/>
 
     <!-- SpringMVC上传文件  配置MultipartResolver作为上传工具 -->

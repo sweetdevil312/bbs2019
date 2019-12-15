@@ -69,7 +69,7 @@
                     </span>
                     <span style="display: inline-block" id="info">${errorMessage}</span>
 
-                    <p class="form-control-static">请使用半角的 a-z 或数字 0-9</p>
+                    <p class="form-control-static">请使用数字或字母</p>
                 </div>
             </div>
             <div class="form-group">
@@ -84,7 +84,7 @@
                     <input type="email" class="form-control" id="email" name="email" required="required">
                 </div>
             </div>
-
+<!--
             <div class="form-group">
                 <label class="col-sm-2 control-label">国际电话区号</label>
                 <div class="col-sm-10" style="width: 40%;">
@@ -95,7 +95,7 @@
                     </select>
                 </div>
             </div>
-
+-->
             <div class="form-group">
                 <label class="col-sm-2 control-label">手机号</label>
                 <div class="col-sm-10" style="width: 40%;">
