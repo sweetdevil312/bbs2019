@@ -1,7 +1,9 @@
 package pojo;
 
 import java.util.Date;
-
+/**
+ *访问者
+ */
 public class Visitor {
 
     private Integer id;

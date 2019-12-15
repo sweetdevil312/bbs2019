@@ -2,7 +2,9 @@ package pojo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+/**
+ *回复
+ */
 public class Reply {
 
     private User user;

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 主题
+ * 主题贴
  */
 public class Topic {
 

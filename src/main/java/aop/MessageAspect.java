@@ -36,11 +36,13 @@ public class MessageAspect {
     //当添加了reply后，获取从后台返回的ModelAndView
     @AfterReturning(returning = "view",pointcut = "execution(* controller.ReplyController.addReply(..))")
     public void insertMessage(Object view){
+
         HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Integer topicId=Integer.parseInt(request.getParameter("topicId"));
         Topic topic =topicService.selectById(topicId);
         Integer replyUserId=Integer.parseInt(request.getParameter("replyUserId"));
         Reply reply= (Reply) ((ModelAndView)view).getModel().get("reply");
+
         //创建message
         Message message=new Message();
         message.setAction("1");

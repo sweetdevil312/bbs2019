@@ -2,7 +2,9 @@ package pojo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+/**
+ *用户类
+ */
 public class User {
 
     private Integer id;

@@ -23,9 +23,13 @@ public class VisitorAspect {
     VisitorService visitorService;
     @Before("execution(* controller.TopicController.*(..))")
     public void addVisitorAspect(){
+
         Visitor visitor=new Visitor();
+
         HttpServletRequest request= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
         String ip = request.getHeader("x-forwarded-for");
+
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
@@ -42,6 +46,7 @@ public class VisitorAspect {
             ip = request.getRemoteAddr();
         }
         UserAgent userAgent=UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+
         //获取用户浏览器名
         String userbrowser=userAgent.getBrowser().toString();
         visitor.setIP(ip);

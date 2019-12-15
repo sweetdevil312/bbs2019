@@ -2,6 +2,6 @@ package test;
 
 public class test {
     public static void main(String[] args) {
-        System.out.println("李浩飞");
+        System.out.println("hello world!");
     }
 }

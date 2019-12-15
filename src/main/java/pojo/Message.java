@@ -1,7 +1,9 @@
 package pojo;
 
 import java.util.Date;
-
+/**
+ *消息
+*/
 public class Message {
 
     private Integer id;

@@ -1,7 +1,9 @@
 package pojo;
 
 import java.util.List;
-
+/**
+ *板块
+ */
 public class Tab {
 
     private Integer id;
