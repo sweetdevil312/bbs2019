@@ -48,7 +48,7 @@ a{
 <body>
 <footer class="footer">
     <div class="container">
-        Lhfly是一个认真而有趣的社区，不同的人在上面分享自己的见解
+        V2Explore是一个有趣的社区，欢迎大家在此分享见解
         <br/><br/><br/>
         <p>Designed by </span> lhf2018</p>
     </div>

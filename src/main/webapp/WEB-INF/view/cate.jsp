@@ -42,11 +42,13 @@
             width: 40%;
             float: left;
         }
+
         .info {
             margin-right: 5%;
             width: 10%;
             float: left;
         }
+
         a{
             color: #8A8A8A;
             cursor: pointer;

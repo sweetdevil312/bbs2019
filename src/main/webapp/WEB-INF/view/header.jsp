@@ -5,7 +5,7 @@
     <nav class="navbar navbar-default" role="navigation" style="background:linear-gradient(#f1f1f1,#c4e3f3);">
         <div class="container-fluid" style="margin-left: 10%">
             <div class="navbar-header">
-                <a class="navbar-brand" style="color: black" href="/">Lhfly</a>
+                <a class="navbar-brand" style="color: black" href="/">V2Explore</a>
             </div>
             <div style="margin-top: 5px">
 

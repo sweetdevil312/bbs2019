@@ -18,7 +18,7 @@
     <div class="panel-heading" style="background-color: white">
         <div>
             <div class="panel-heading" style="background-color: white">
-                <a href="/">Lhfly</a> › 主题
+                <a href="/">V2Explorer</a> › 主题
             </div>
             <h3 style="color: black;font-weight: bold"><c:if test="${topic.isEssence==1}"><p style="color: #c9302c;display: inline">[ 精品 ]</p> </c:if>${topic.title}</h3><br/>
             <div>

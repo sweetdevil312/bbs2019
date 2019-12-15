@@ -84,18 +84,7 @@
                     <input type="email" class="form-control" id="email" name="email" required="required">
                 </div>
             </div>
-<!--
-            <div class="form-group">
-                <label class="col-sm-2 control-label">国际电话区号</label>
-                <div class="col-sm-10" style="width: 40%;">
-                    <select class="form-control" id="areaCode" name="areaCode">
-                        <option value="86">+86</option>
-                        <option value="85">+85</option>
-                        <option value="84">+84</option>
-                    </select>
-                </div>
-            </div>
--->
+
             <div class="form-group">
                 <label class="col-sm-2 control-label">手机号</label>
                 <div class="col-sm-10" style="width: 40%;">
