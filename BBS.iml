@@ -6,6 +6,8 @@
         <fileset id="fileset" name="ApplicationContext" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/springMVC.xml</file>
+          <file>file://$MODULE_DIR$/src/src/main/resources/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/src/main/resources/springMVC.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -17,6 +19,11 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+          <root url="file://$MODULE_DIR$/src/main/webapp/static" />
+        </sourceRoots>
       </configuration>
     </facet>
   </component>
@@ -27,6 +34,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/webapp/static" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/src/main/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
