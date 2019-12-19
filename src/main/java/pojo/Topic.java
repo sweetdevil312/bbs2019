@@ -29,8 +29,10 @@ public class Topic {
     private Byte tabId;
 
     private String content;
-
+    // 加精
     private Integer isEssence;
+    // 置顶
+    private Integer isSticky;
 
     public Integer getIsEssence() {
         return isEssence;
@@ -126,6 +128,14 @@ public class Topic {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getIsSticky() {
+        return isSticky;
+    }
+
+    public void setIsSticky(Integer isSticky) {
+        this.isSticky = isSticky;
     }
 
     /**

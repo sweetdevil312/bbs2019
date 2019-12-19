@@ -44,8 +44,8 @@ public class TopicController {
         ModelAndView modelAndView=new ModelAndView("cate");
         //获取第1页，10条内容，默认查询总数count
         PageHelper.offsetPage(page.getStart(),page.getCount());
-        //首页全部主题
-        List<Topic> topics=topicService.listTopicsAndUsers();
+        //首页全部贴
+        List<Topic> topics = topicService.listTopicsAndUsers();
         //分页
         int total= (int) new PageInfo<Topic>(topics).getTotal();
         page.setTotal(total);
@@ -93,6 +93,7 @@ public class TopicController {
         //获取统计信息
         int topicsNum=topicService.getTopicsNum();
         int usersNum=userService.getUserCount();
+
         //获取用户信息
         Integer uid= (Integer) session.getAttribute("userId");
         User user=userService.getUserById(uid);
@@ -282,6 +283,22 @@ public class TopicController {
     public String addEssence(@PathVariable("topicId")Integer topicId){
         Topic topic=topicService.selectById(topicId);
         topic.setIsEssence(1);
+        topicService.updateByPrimaryKeySelective(topic);
+        return "redirect:/t/"+topicId;
+    }
+    // 给主题置顶
+    @RequestMapping("/topic/addSticky/{topicId}")
+    public String addSticky(@PathVariable("topicId")Integer topicId){
+        Topic topic=topicService.selectById(topicId);
+        topic.setIsSticky(1);
+        topicService.updateByPrimaryKeySelective(topic);
+        return "redirect:/t/"+topicId;
+    }
+    // 给主题取消置顶
+    @RequestMapping("/topic/cancelSticky/{topicId}")
+    public String cancelSticky(@PathVariable("topicId")Integer topicId){
+        Topic topic=topicService.selectById(topicId);
+        topic.setIsSticky(0);
         topicService.updateByPrimaryKeySelective(topic);
         return "redirect:/t/"+topicId;
     }

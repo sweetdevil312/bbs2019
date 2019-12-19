@@ -38,9 +38,14 @@ public interface TopicMapper {
     List<Topic> listAllEssenceTopics();
     //获取部分精品帖子
     List<Topic> listEssenceTopics(Integer tabId);
+    //获取全部置顶帖子
+    List<Topic> listAllStickyTopics();
+    //获取部分置顶帖子
+    List<Topic> listStickyTopics(Integer tabId);
     //删除主题
     int deleteByPrimaryKey(int topicId);
     //查看是否帖子存在
     int existTopic(Integer topicId);
+
 
 }

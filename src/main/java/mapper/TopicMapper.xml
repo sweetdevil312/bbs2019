@@ -11,6 +11,7 @@
         <result column="click" property="click" jdbcType="INTEGER" />
         <result column="tab_id" property="tabId" jdbcType="TINYINT" />
         <result column="isEssence" property="isEssence" jdbcType="INTEGER"/>
+        <result column="isSticky" property="isSticky" jdbcType="INTEGER"/>
     </resultMap>
     <!-- 主题基本结果集+ 主题内容  用于主题详情-->
     <resultMap id="ResultMapWithBLOBs" type="pojo.Topic">
@@ -27,6 +28,7 @@
         <result column="tab_id" property="tabId" jdbcType="TINYINT" />
         <result column="count_replies" property="countReplies" jdbcType="INTEGER" />
         <result column="isEssence" property="isEssence" jdbcType="INTEGER"/>
+        <result column="isSticky" property="isSticky" jdbcType="INTEGER"/>
         <association property="user" javaType="pojo.User">
             <id column="id" property="id" jdbcType="INTEGER" />
             <result column="username" property="username" jdbcType="VARCHAR" />
@@ -48,6 +50,7 @@
         <result column="click" property="click" jdbcType="INTEGER" />
         <result column="tab_id" property="tabId" jdbcType="TINYINT" />
         <result column="isEssence" property="isEssence" jdbcType="INTEGER"/>
+        <result column="isSticky" property="isSticky" jdbcType="INTEGER"/>
         <association property="user" javaType="pojo.User">
             <id column="id" property="id" jdbcType="INTEGER" />
             <result column="username" property="username" jdbcType="VARCHAR" />
@@ -62,28 +65,28 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,create_time,update_time,title,click,tab_id,isEssence
+        id,user_id,create_time,update_time,title,click,tab_id,isEssence,isSticky
     </sql>
     <sql id="Blob_Column_List" >
         content
     </sql>
     <select id="listTopicsAndUsers" resultMap="topicAndUserInfo" >
-        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,user.username,user.avatar ,
+        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,topic.isSticky,user.username,user.avatar ,
                tab.tab_name,count(reply.id) as count_replies
         from topic LEFT JOIN user on  topic.user_id = user.id
           LEFT JOIN tab on tab.id=topic.tab_id
           LEFT JOIN reply on topic.id=reply.topic_id
-        group by topic.id order by topic.id desc
+        group by topic.id order by topic.isSticky desc,topic.id desc
     </select>
     <select id="listTopicsAndUsersOfTab" parameterType="java.lang.Integer" resultMap="topicAndUserInfo">
-        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,user.username,user.avatar ,
+        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,topic.isSticky,user.username,user.avatar ,
                tab.tab_name,count(reply.id) as count_replies
         from topic
         left join user on topic.user_id=user.id
         left join tab on tab.id=topic.tab_id
         left join reply on topic.id=reply.topic_id
         where tab.id=#{id,jdbcType=INTEGER}
-        group by topic.id order by topic.id desc
+        group by topic.id order by topic.isSticky desc,topic.id desc
     </select>
     <select id="selectById" parameterType="java.lang.Integer" resultMap="topicAndUserDetail">
         select topic.*,user.username,user.avatar
@@ -95,7 +98,7 @@
         select
         <include refid="Base_Column_List"/>
         from topic
-        ORDER BY id DESC;
+        ORDER BY topic.isSticky desc,id DESC,topic.id desc
     </select>
     <select id="getTopicsNum" resultType="java.lang.Integer" >
         select
@@ -107,22 +110,22 @@
         from topic ,reply
         where topic.id=reply.topic_id
         group by topic.id
-        order by count_replies desc
-        limit 5;
+        order by count_replies desc,topic.isSticky
+        limit 10;
     </select>
     <!--选取活跃的帖子-->
     <select id="listAllActiveTopics" resultMap="topicAndUserInfo">
-        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,user.username,user.avatar,
+        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,topic.isSticky,user.username,user.avatar,
                tab.tab_name,count(reply.id) as count_replies
         from topic
                  left join user on topic.user_id=user.id
                  left join tab on tab.id=topic.tab_id
                  left join reply on topic.id=reply.topic_id
         group by topic.id
-        order by count_replies desc
+        order by topic.isSticky desc,count_replies desc
     </select>
     <select id="listActiveTopics" parameterType="java.lang.Integer" resultMap="topicAndUserInfo">
-        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,user.username,user.avatar ,
+        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,topic.isSticky,user.username,user.avatar ,
                tab.tab_name,count(reply.id) as count_replies
         from topic
                  left join user on topic.user_id=user.id
@@ -130,22 +133,22 @@
                  left join reply on topic.id=reply.topic_id
         where tab.id=#{id,jdbcType=INTEGER}
         group by topic.id
-        order by count_replies desc
+        order by topic.isSticky desc,count_replies desc
     </select>
     <!--选取最近更新的帖子-->
     <select id="listAllRecentTopics" resultMap="topicAndUserInfo">
-        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,user.username,user.avatar,
+        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,topic.isSticky,user.username,user.avatar,
                tab.tab_name,count(reply.id) as count_replies
         from topic
                  left join user on topic.user_id=user.id
                  left join tab on tab.id=topic.tab_id
                  left join reply on topic.id=reply.topic_id
         group by topic.id
-        order by topic.update_time desc
+        order by topic.isSticky desc,topic.update_time desc
     </select>
 
     <select id="listRecentTopics" parameterType="java.lang.Integer" resultMap="topicAndUserInfo">
-        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,user.username,user.avatar ,
+        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,topic.isSticky,user.username,user.avatar ,
                tab.tab_name,count(reply.id) as count_replies
         from topic
                  left join user on topic.user_id=user.id
@@ -153,11 +156,11 @@
                  left join reply on topic.id=reply.topic_id
         where tab.id=#{id,jdbcType=INTEGER}
         group by topic.id
-        order by topic.update_time desc
+        order by topic.isSticky desc,topic.update_time desc
     </select>
     <!--获取精品帖子-->
     <select id="listAllEssenceTopics" resultMap="topicAndUserInfo">
-        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,user.username,user.avatar,
+        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,topic.isSticky,user.username,user.avatar,
                tab.tab_name,count(reply.id) as count_replies
         from topic
                  left join user on topic.user_id=user.id
@@ -165,10 +168,10 @@
                  left join reply on topic.id=reply.topic_id
         where topic.isEssence=1
         group by topic.id
-        order by count_replies desc
+        order by topic.isSticky desc,count_replies desc
     </select>
     <select id="listEssenceTopics" parameterType="java.lang.Integer" resultMap="topicAndUserInfo">
-        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,user.username,user.avatar ,
+        select topic.id,topic.user_id,topic.create_time,topic.update_time,topic.title,topic.click,topic.tab_id,topic.isEssence,topic.isSticky,user.username,user.avatar ,
                tab.tab_name,count(reply.id) as count_replies
         from topic
                  left join user on topic.user_id=user.id
@@ -176,15 +179,16 @@
                  left join reply on topic.id=reply.topic_id
         where topic.isEssence=1 and tab.id=#{id,jdbcType=INTEGER}
         group by topic.id
-        order by count_replies desc
+        order by topic.isSticky desc,count_replies desc
     </select>
+
     <select id="existTopic" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM topic WHERE id=#{id,jdbcType=INTEGER};
     </select>
     <insert id="insert" parameterType="pojo.Topic">
         insert into topic(user_id, create_time,
                           update_time, title,
-                          tab_id, content,isEssence)
+                          tab_id, content,isEssence,isSticky,)
         values ( #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
                  #{updateTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR},
                  #{tabId,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR},0)
@@ -269,8 +273,11 @@
             <if test="isEssence != null" >
                 isEssence = #{isEssence,jdbcType=INTEGER},
             </if>
+            <if test="isSticky != null" >
+                isSticky = #{isSticky,jdbcType=INTEGER},
+            </if>
             <if test="content != null" >
-                content = #{content,jdbcType=LONGVARCHAR},
+                content = #{content,jdbcType=LONGVARCHAR}
             </if>
         </set>
           where id=#{id,jdbcType=INTEGER}
@@ -294,7 +301,8 @@
             title = #{title,jdbcType=VARCHAR},
             click = #{click,jdbcType=INTEGER},
             tab_id = #{tabId,jdbcType=TINYINT},
-            isEssence = #{isEssence,jdbcType=INTEGER}
+            isEssence = #{isEssence,jdbcType=INTEGER},
+            isSticky = #{isSticky,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="clickAddOne" parameterType="java.lang.Integer">

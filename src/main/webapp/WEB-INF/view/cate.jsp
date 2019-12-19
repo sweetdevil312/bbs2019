@@ -74,7 +74,8 @@
                 <img width="50px" height="50px" src="${topic.user.avatar}" class="img-rounded">
             </div>
             <div style="width: 89%;float: left">
-                <a style="color: black;font-weight: normal;" href="/t/${topic.id}"><c:if test="${topic.isEssence==1}"><p style="color: #c9302c;display: inline">[ 精品 ]</p></c:if> ${topic.title}</a><br/>
+                <a style="color: black;font-weight: normal;" href="/t/${topic.id}"><c:if test="${topic.isSticky==1}"><p style="color: #2e6da4;display: inline">[ 置顶 ]</p></c:if>
+                    <c:if test="${topic.isEssence==1}"><p style="color: #c9302c;display: inline">[ 精品 ]</p></c:if>${topic.title}</a><br/>
                 <div>
                     <a><span class="label label-default" >${topic.tab.tabName}</span></a>&nbsp;&nbsp;&nbsp;
                     <a href="/member/${topic.user.username}"><span ><strong>${topic.user.username}</strong></span></a>&nbsp;&nbsp;&nbsp;
