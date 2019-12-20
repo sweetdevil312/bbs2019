@@ -22,6 +22,8 @@
                          </c:if>><a style="color: black" href="/tab/jobs">工作</a></li>
                     <li <c:if test="${tab.tabNameEn == 'deals'}">class="active"
                         </c:if>><a style="color: black" href="/tab/deals">交易</a></li>
+                    <li <c:if test="${tab.tabNameEn == 'needs'}">class="active"
+                    </c:if>><a style="color: black" href="/tab/needs">需求</a></li>
 
                 </ul>
 

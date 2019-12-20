@@ -29,6 +29,7 @@
         </div>
         <ul class="list-group" style="width: 100%">
             <a class="list-group-item" href="/new">发布新主题</a>
+            <a class="list-group-item" href="/showMyTopic">查看我的贴子</a>
             <a class="list-group-item" href="/message/${userId}">${unreadMessage} 条未读消息</a>
             <a class="list-group-item" href="">积分:${user.credit}</a>
         </ul>

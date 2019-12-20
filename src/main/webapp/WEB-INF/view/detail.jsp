@@ -8,7 +8,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <script src="/js/jquery-3.2.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <title>${topic.title} - V2Explore </title>
+    <title>${topic.title} - Genesis </title>
 </head>
 <body>
 <!-- 引入header文件 -->
@@ -20,9 +20,7 @@
             <div class="panel-heading" style="background-color: white">
                 <a href="/">V2Explorer</a> › 主题
             </div>
-            <h3 style="color: black;font-weight: bold"><c:if test="${topic.isSticky==1}"><p style="color: #2e6da4;display: inline">[ 置顶 ]</p> </c:if>
-                <c:if test="${topic.isEssence==1}"><p style="color: #c9302c;display: inline">[ 精品 ]</p> </c:if>
-                ${topic.title}</h3><br/>
+            <h3 style="color: black;font-weight: bold"><c:if test="${topic.isEssence==1}"><p style="color: #c9302c;display: inline">[ 精品 ]</p> </c:if>${topic.title}</h3><br/>
             <div>
                 <div style="float: right;margin-top: -70px" >
                     <img width="50px" height="50px" src="${topic.user.avatar}" class="img-rounded">
@@ -30,34 +28,13 @@
                 <a href="/member/${topic.user.username}"><span ><strong>${topic.user.username}</strong></span></a>&nbsp;&nbsp;
                 <small class="text-muted">创建于: ${topic.localCreateTime}&nbsp;&nbsp;&nbsp;</small>&nbsp;&nbsp;
                 <small class="text-muted">阅读量: ${topic.click}</small>
-                <c:if test="${user.type==1}">
-                    <a id="deleteTopic" href="/topic/delete/${topic.id}">
-                        <p class="btn btn-success btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">删除主题&nbsp;&nbsp;</p></a>
-                </c:if>
-                <c:if test="${user.type==1}">
-                    <a id="cancelEssence" href="/topic/cancelEssence/${topic.id}">
-                        <p class="btn btn-info btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">取消精品&nbsp;&nbsp;</p></a>
-                </c:if>
-                <c:if test="${user.type==1}">
-                    <a id="addEssence" href="/topic/addEssence/${topic.id}">
-                        <p class="btn btn-danger btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">添加精品&nbsp;&nbsp;</p></a>
-                </c:if>
-                <c:if test="${user.type==1}">
-                    <a id="cancelSticky" href="/topic/cancelSticky/${topic.id}">
-                        <p class="btn btn-info btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">取消置顶&nbsp;&nbsp;</p></a>
-                </c:if>
-                <c:if test="${user.type==1}">
-                    <a id="addSticky" href="/topic/addSticky/${topic.id}">
-                        <p class="btn btn-warning btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">添加置顶&nbsp;&nbsp;</p></a>
-                </c:if>
-                <c:if test="${(user.type==1)||(user.id==topic.userId)}">
-                    <a data-toggle="modal" data-target="#myModal">
-                        <p class="btn btn-primary btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">修改主题&nbsp;&nbsp;</p></a>
-                </c:if>
+                <c:if test="${topic.tabId=='6'&&topic.reward>0}"> <small class="text-muted">悬赏积分: ${topic.reward}</small></c:if>
+                <c:if test="${topic.tabId=='6'&&topic.reward==0}"><a><span class="label label-primary">状态:已解决</span></a></c:if>
+                <c:if test="${user.type==1}"><a id="deleteTopic" href="/topic/delete/${topic.id}"><p class="btn btn-success btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">删除主题&nbsp;&nbsp;</p></a></c:if>
+                <c:if test="${user.type==1}"><a id="cancelEssence" href="/topic/cancelEssence/${topic.id}"><p class="btn btn-info btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">取消精品&nbsp;&nbsp;</p></a></c:if>
+                <c:if test="${user.type==1}"><a id="addEssence" href="/topic/addEssence/${topic.id}"><p class="btn btn-danger btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">添加精品&nbsp;&nbsp;</p></a></c:if>
             </div>
         </div>
-
-
     </div>
 
     <ul class="list-group" style="width: 100%">
@@ -66,50 +43,6 @@
             </li>
     </ul>
 </div>
-    <!-- 修改主题 使用模态窗口-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        修改主题内容
-                    </h4>
-                </div>
-                <div class="modal-body">
-                        <form action="/topic/update/${topic.id}" method="post">
-                            <div class="form-group">
-                                <label for="title">主题标题</label>
-                                <input type="text" class="form-control" id="title" name="title" value="${topic.title}" required="required">
-                            </div>
-                            <div class="form-group">
-                                <label for="content">正文</label>
-                                <textarea class="form-control" rows="10" id="content" name="content">
-                                    ${topic.content}
-                                </textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="tab">板块</label><br/>
-                                <div class="col-sm-10" style="width: 40%">
-                                    <select class="form-control" id="tab" name="tab">
-                                        <c:forEach items="${tabs}" var="tab">
-                                            <option value="${tab.id}">${tab.tabName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div><br>
-                            </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消修改
-                    </button>
-                    <input type="submit" class="btn btn-primary" value="提交更改">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
 <c:if test="${!empty replies}">
 <div class="panel panel-default" id="main" style="">
@@ -129,12 +62,19 @@
         <c:forEach items="${replies}" var="reply">
         <li class="list-group-item">
             <div style="display: inline-block;margin:2px">
-                <div style="width: 50px;margin-right:10px;height: 110px;vertical-align:top;display: inline-block">
-                    <img width="50px" height="50px" src="${reply.user.avatar} " class="img-rounded">
+                <div style="width: 50px;margin-right:10px;height: 110px;vertical-align:top;display: inline-block;float:left;">
+                    <img width="50px" height="50px" src="${reply.user.avatar} " class="img-rounded" >
+                    <%--<div style="width: 200px;height: 110px;margin-left: 800px; float: left;font-size: 15px">--%>
+                        <%--<c:if test="${topic.tabId==6&&topic.user.username==sessionScope.username&&topic.reward>0}"> <a style="float: left" id="setBestReply" href="/reply/setBestReply/${reply.id}/${topic.id}" >设置为最佳解答</a></c:if>--%>
+                    <%--</div>--%>
                 </div>
+                    <c:if test="${topic.tabId==6&&topic.user.username==sessionScope.username&&topic.reward>0}"> <a style=" margin-left:800px;height:110px;width:200px;float: left;font-size: 15px" id="setBestReply" href="/reply/setBestReply/${reply.id}/${topic.id}" ><p class="btn btn-primary">设置为最佳解答</p></a></c:if>
+
                 <div style="width: 900px;height: 100px;margin-top:2px;display: inline-block">
                     <a href="/member/${reply.user.username}"><strong>${reply.user.username}</strong></a>&nbsp;&nbsp;
                     <small class="text-muted">${reply.localCreateTime}</small>
+                    <c:if test="${reply.id==topic.bestReplyID}">
+                        <span class="label label-primary">最佳解答</span></c:if>
                     <c:if test="${user.type==1}"><a class="deleteReply" style="margin-right: 5px" href="/reply/delete/${reply.id}/${topic.id}"><p class="btn btn-danger btn-xs" style="text-align:center;display: inline">删除回复</p></a></c:if>
                     <br/>
                     <div>
@@ -170,7 +110,6 @@
 </c:if>
 
 </div>
-
 <div align="center" style="display:block;float: right;margin-right: 30px">
     <!-- 引入侧边栏文件 -->
     <%@ include file="side.jsp"%>
@@ -189,7 +128,7 @@
         }else {
             return submitValidate(false);
         }
-    })
+    });
     $("#cancelEssence").click(function () {
         var ifSubmit=confirm("确定把该主题置为普通帖子吗?");
         if (ifSubmit == true){
@@ -197,7 +136,7 @@
         }else {
             return submitValidate(false);
         }
-    })
+    });
     $("#addEssence").click(function () {
         var ifSubmit=confirm("确定把该主题添加为精品主题吗?");
         if (ifSubmit == true){
@@ -205,23 +144,7 @@
         }else {
             return submitValidate(false);
         }
-    })
-    $("#cancelSticky").click(function () {
-        var ifSubmit=confirm("确定把该主题取消置顶吗?");
-        if (ifSubmit == true){
-
-        }else {
-            return submitValidate(false);
-        }
-    })
-    $("#addSticky").click(function () {
-        var ifSubmit=confirm("确定把该主题置顶吗?");
-        if (ifSubmit == true){
-
-        }else {
-            return submitValidate(false);
-        }
-    })
+    });
     $(".deleteReply").click(function () {
         var ifSubmit=confirm("确定删除该回复吗?");
         if (ifSubmit == true){
@@ -229,6 +152,13 @@
         }else {
             return submitValidate(false);
         }
+    });
+    $("#setBestReply").click(function () {
+        var ifSubmit=confirm("确定将该恢复设置为最佳解答吗？设置完之后将不可更改！");
+        if(ifSubmit==true){}
+        else {return submitValidate(false);
+        }
+
     })
 </script>
 </body>

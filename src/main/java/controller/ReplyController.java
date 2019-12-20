@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import pojo.Message;
 import pojo.Reply;
 import pojo.Topic;
 import pojo.User;
@@ -64,6 +65,24 @@ public class ReplyController {
     @Transactional
     public String delete(@PathVariable("replyId")Long replyId,@PathVariable("topicId")Integer topicId){
         replyService.deleteByPrimaryKey(replyId);
+        return "redirect:/t/"+topicId;
+    }
+    @RequestMapping("/reply/setBestReply/{replyId}/{topicId}")
+    @Transactional
+    public String setBestReply(@PathVariable("replyId")Long replyId,@PathVariable("topicId") Integer topicId){
+        int replyUid=replyService.getReplyUser(replyId);
+        User replyUser=userService.getUserById(replyUid);
+        int topicUid=topicService.getTopicUser(topicId);
+        User topicUser=userService.getUserById(topicUid);
+        Topic topic=topicService.selectById(topicId);
+        replyUser.setCredit(replyUser.getCredit()+topic.getReward());
+        topicUser.setCredit(topicUser.getCredit()-topic.getReward());
+        int reward=topic.getReward();
+        topic.setReward(0);
+        topic.setBestReplyID(replyId);
+        userService.updateUser(replyUser);
+        userService.updateUser(topicUser);
+        topicService.updateByPrimaryKeySelective(topic);
         return "redirect:/t/"+topicId;
     }
 }

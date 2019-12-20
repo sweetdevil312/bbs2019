@@ -56,7 +56,7 @@ public class Page {
     public void setParam(String param) {
         this.param = param;
     }
-    public boolean isHasPrevious(){
+    public boolean isHasPreviouse(){
         if(start==0){
             return false;
         }
@@ -93,7 +93,7 @@ public class Page {
     }
     public String toString() {
         return "Page [start=" + start + ", count=" + count + ", total=" + total + ", getStart()=" + getStart()
-                + ", getCount()=" + getCount() + ", isHasPrevious()=" + isHasPrevious() + ", isHasNext()="
+                + ", getCount()=" + getCount() + ", isHasPreviouse()=" + isHasPreviouse() + ", isHasNext()="
                 + isHasNext() + ", getTotalPage()=" + getTotalPage() + ", getLast()=" + getLast() + "]";
     }
 }

@@ -12,15 +12,17 @@
         <result column="credit" property="credit" jdbcType="INTEGER" />
         <result column="avatar" property="avatar" jdbcType="VARCHAR" />
         <result column="type" property="type" jdbcType="TINYINT" />
+        <result column="job" property="job" jdbcType="VARCHAR" />
+        <result column="workplace" property="workplace" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List">
-        id,username,password,email,phone_num,create_time,update_time,credit,avatar,type
+        id,username,password,email,phone_num,create_time,update_time,credit,avatar,type,job,workplace
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from user
-        where id=#{id,jdbcType=INTEGER};
+        where id=#{id,jdbcType=INTEGER}
     </select>
 
     <select id="getUserCount" resultType="java.lang.Integer" >
@@ -44,11 +46,11 @@
     </delete>
 
     <insert id="addUser" parameterType="pojo.User">
-        insert into user (username,password,email,phone_num,create_time,update_time,credit,type,avatar)
+        insert into user (username,password,email,phone_num,create_time,update_time,credit,type,avatar,job,workplace)
         values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
                 #{email,jdbcType=VARCHAR}, #{phoneNum,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
                 #{updateTime,jdbcType=TIMESTAMP}, #{credit,jdbcType=INTEGER},
-                #{type,jdbcType=TINYINT},#{avatar,jdbcType=VARCHAR})
+                #{type,jdbcType=TINYINT},#{avatar,jdbcType=VARCHAR},#{job,jdbcType=VARCHAR},#{workplace,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="pojo.User">
         insert into user
@@ -83,6 +85,12 @@
             <if test="type != null" >
                 type,
             </if>
+            <if test="job !=null">
+                job,
+            </if>
+            <if test="workplace !=null">
+                workplace,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -114,6 +122,12 @@
             </if>
             <if test="type != null" >
                 #{type,jdbcType=TINYINT},
+            </if>
+            <if test="job!=null">
+                #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="workplace!=null">
+                #{workplace,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -147,6 +161,12 @@
             <if test="type != null" >
                 type = #{type,jdbcType=TINYINT},
             </if>
+            <if test="job != null">
+                job=#{job,jdbcType=VARCHAR},
+            </if>
+            <if test="workplace != null">
+                workplace=#{workplace,jdbcType=VARCHAR}
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -160,10 +180,13 @@
             update_time = #{updateTime,jdbcType=TIMESTAMP},
             credit = #{credit,jdbcType=INTEGER},
             avatar = #{avatar,jdbcType=VARCHAR},
-            type = #{type,jdbcType=TINYINT}
+            type = #{type,jdbcType=TINYINT},
+            job=#{job,jdbcType=VARCHAR},
+            workplace=#{workplace,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="addCredit" parameterType="int">
         update user set credit=credit+#{points,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
     </update>
+
 </mapper>

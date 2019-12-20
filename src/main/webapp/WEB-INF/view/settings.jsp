@@ -7,7 +7,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <script src="/js/jquery-3.2.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <title>V2Explore ›设置</title>
+    <title>Genesis ›设置</title>
 </head>
 <body>
 <!-- 引入header文件 -->
@@ -23,39 +23,53 @@
 
                 <form class="form-horizontal" role="form" >
                     <div style="margin-left: 17%">
-                        <img width="60px" height="60px" src="${user.avatar}" class="img-rounded">
+                        <%--<img width="60px" height="60px" src="${user.avatar}" class="img-rounded">--%>
                         <a class="btn btn-default" href="/settings/avatar" role="button">更换头像</a>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">uid</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">${user.id}</p>
-                        </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div style="margin-left: 17%">
+                        <%--<img width="60px" height="60px" src="${user.avatar}" class="img-rounded">--%>
+                        <a class="btn btn-default" href="/settings/userInfo" role="button">修改信息</a>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">用户名</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">${user.username}</p>
-                        </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div style="margin-left: 17%">
+                        <%--<img width="60px" height="60px" src="${user.avatar}" class="img-rounded">--%>
+                        <a class="btn btn-default" href="/settings/changePassword" role="button">修改密码</a>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">${user.email}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">注册时间</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">${user.localCreateTime}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">积分</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">${user.credit}</p>
-                        </div>
-                    </div>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-2 control-label">uid</label>--%>
+                        <%--<div class="col-sm-10">--%>
+                            <%--<p class="form-control-static">${user.id}</p>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-2 control-label">用户名</label>--%>
+                        <%--<div class="col-sm-10">--%>
+                            <%--<p class="form-control-static">${user.username}</p>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-2 control-label">Email</label>--%>
+                        <%--<div class="col-sm-10">--%>
+                            <%--<p class="form-control-static">${user.email}</p>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-2 control-label">注册时间</label>--%>
+                        <%--<div class="col-sm-10">--%>
+                            <%--<p class="form-control-static">${user.localCreateTime}</p>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-2 control-label">积分</label>--%>
+                        <%--<div class="col-sm-10">--%>
+                            <%--<p class="form-control-static">${user.credit}</p>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
 
                 </form>
 

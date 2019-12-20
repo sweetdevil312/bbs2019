@@ -29,10 +29,10 @@ public class Topic {
     private Byte tabId;
 
     private String content;
-    // 加精
+
     private Integer isEssence;
-    // 置顶
-    private Integer isSticky;
+    private Integer reward;
+    private Long bestReplyID;
 
     public Integer getIsEssence() {
         return isEssence;
@@ -130,12 +130,20 @@ public class Topic {
         this.content = content;
     }
 
-    public Integer getIsSticky() {
-        return isSticky;
+    public Integer getReward() {
+        return reward;
     }
 
-    public void setIsSticky(Integer isSticky) {
-        this.isSticky = isSticky;
+    public void setReward(Integer reward) {
+        this.reward = reward;
+    }
+
+    public Long getBestReplyID() {
+        return bestReplyID;
+    }
+
+    public void setBestReplyID(Long bestReplyID) {
+        this.bestReplyID = bestReplyID;
     }
 
     /**

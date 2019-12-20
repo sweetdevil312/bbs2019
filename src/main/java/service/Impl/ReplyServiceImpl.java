@@ -32,4 +32,8 @@ public class ReplyServiceImpl implements ReplyService {
     public int deleteByPrimaryKey(Long id) {
         return replyMapper.deleteByPrimaryKey(id);
     }
+
+    public int getReplyUser(Long id) {
+        return replyMapper.getReplyUser(id);
+    }
 }

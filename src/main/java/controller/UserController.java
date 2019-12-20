@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,10 +54,20 @@ public class UserController {
         Byte type=new Byte("0");
         //密码加密处理
         String password= ProduceMD5.getMD5(request.getParameter("password"));
+        //用户职业
+        String job=request.getParameter("job");
+        //用户工作单位
+        String workplace=request.getParameter("workplace");
         //生成随机数，用于生成头像URL
         Random random=new Random();
         int randomNum=random.nextInt(10)+1;
         String avatarUrl="/img/avatar/avatar-default-"+randomNum+".png";
+//        if(job.equals("")){
+//            job="用户暂未填写相关信息";
+//        }
+//        if(workplace.equals("")){
+//            workplace="用户暂未填写相关信息";
+//        }
         //初始化User对象
         user.setUsername(request.getParameter("username"));
         user.setPassword(password);
@@ -67,6 +78,8 @@ public class UserController {
         user.setCredit(0);
         user.setType(type);
         user.setAvatar(avatarUrl);
+        user.setJob(job);
+        user.setWorkPlace(workplace);
 
         boolean success=userService.addUser(user);
         System.out.println(success);
@@ -259,7 +272,7 @@ public class UserController {
         List<Topic> hotestTopics=topicService.listMostCommentsTopics();
         //获取访问量
         Integer visitorNum=visitorService.countVisitor();
-        ModelAndView mv=new ModelAndView("update_avatar");
+        ModelAndView mv=new ModelAndView("redirect:/member/"+user.getUsername());
         mv.addObject("user", user);
         mv.addObject("hotestTopics", hotestTopics);
         mv.addObject("visitorNum",visitorNum);
@@ -267,4 +280,98 @@ public class UserController {
         mv.addObject("unreadMessage", messageService.getUnreadMessageNumOfUser(uid));
         return mv;
     }
+    @RequestMapping(value = "/settings/userInfo",method = RequestMethod.GET)
+    public ModelAndView updateInfo(HttpServletRequest request, HttpSession session){
+        Integer uid=(Integer) session.getAttribute("userId");
+        User user=userService.getUserById(uid);
+        //最热主题
+        List<Topic> hotestTopics=topicService.listMostCommentsTopics();
+        //获取访问量
+        Integer visitorNum=visitorService.countVisitor();
+
+        ModelAndView mv=new ModelAndView("update_userInfo");
+        mv.addObject("user",user);
+        mv.addObject("hotestTopics",hotestTopics);
+        mv.addObject("visitorNum",visitorNum);
+        mv.addObject("todayVisitor", visitorService.todayVisitor());
+        mv.addObject("unreadMessage", messageService.getUnreadMessageNumOfUser(uid));
+        return mv;
+    }
+    @RequestMapping(value = "/settings/userInfo/update",method = RequestMethod.POST)
+    public ModelAndView updateInfoDo(@RequestParam("username")String username,@RequestParam("email") String email,@RequestParam("phone") String phone,@RequestParam("job") String job,@RequestParam("workplace") String workplace, HttpServletRequest request,HttpSession session){
+        Integer uid=(Integer) session.getAttribute("userId");
+        User user=userService.getUserById(uid);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPhoneNum(phone);
+        user.setJob(job);
+        user.setWorkPlace(workplace);
+
+        ModelAndView mv=new ModelAndView("redirect:/member/"+user.getUsername());
+
+        if(userService.updateUser(user)){
+            mv.addObject("user",user);
+        }
+        else {
+            mv.setViewName("404");
+        }
+        session.setAttribute("username", user.getUsername());
+        //最热主题
+        List<Topic> hotestTopics=topicService.listMostCommentsTopics();
+        //获取访问量
+        Integer visitorNum=visitorService.countVisitor();
+        mv.addObject("user", user);
+        mv.addObject("hotestTopics", hotestTopics);
+        mv.addObject("visitorNum",visitorNum);
+        mv.addObject("todayVisitor", visitorService.todayVisitor());
+        mv.addObject("unreadMessage", messageService.getUnreadMessageNumOfUser(uid));
+        return mv;
+    }
+    @RequestMapping(value = "/settings/changePassword",method = RequestMethod.GET)
+    public ModelAndView changePassword(HttpServletRequest request, HttpSession session){
+        Integer uid=(Integer) session.getAttribute("userId");
+        User user=userService.getUserById(uid);
+        //最热主题
+        List<Topic> hotestTopics=topicService.listMostCommentsTopics();
+        //获取访问量
+        Integer visitorNum=visitorService.countVisitor();
+
+        ModelAndView mv=new ModelAndView("update_password");
+        mv.addObject("user",user);
+        mv.addObject("hotestTopics",hotestTopics);
+        mv.addObject("visitorNum",visitorNum);
+        mv.addObject("todayVisitor", visitorService.todayVisitor());
+        mv.addObject("unreadMessage", messageService.getUnreadMessageNumOfUser(uid));
+        return mv;
+    }
+    @RequestMapping(value = "/setting/changePassword/judge",method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean judgePassword(String uid,String password){
+        boolean flag;
+        String ps=ProduceMD5.getMD5(password);
+        System.out.println(ps);
+        User user=userService.getUserById(Integer.parseInt(uid));
+        if(ps.equals(user.getPassword())){
+            flag=true;
+        }
+        else flag=false;
+        return flag;
+    }
+
+    @RequestMapping(value = "/settings/changePassword/update",method = RequestMethod.POST)
+    public ModelAndView changePasswordDo(@RequestParam("newPassword")String password,HttpServletRequest request,HttpSession session){
+        Integer uid=(Integer) session.getAttribute("userId");
+        User user=userService.getUserById(uid);
+        user.setPassword(ProduceMD5.getMD5(password));
+        ModelAndView mv=new ModelAndView();
+        if(userService.updateUser(user)){
+            mv.setViewName("signin");
+        }
+        else {
+            mv.setViewName("404");
+        }
+        return mv;
+
+    }
+
 }

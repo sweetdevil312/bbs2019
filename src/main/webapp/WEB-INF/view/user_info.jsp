@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,31 +29,49 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">uid</label>
                     <div class="col-sm-10">
-                        <p class="form-control-static">${userInfo.id}</p>
+                        <p class="form-control-static">${user.id}</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">用户名</label>
                     <div class="col-sm-10">
-                        <p class="form-control-static">${userInfo.username}</p>
+                        <p class="form-control-static">${user.username}</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Email</label>
                     <div class="col-sm-10">
-                        <p class="form-control-static">${userInfo.email}</p>
+                        <p class="form-control-static">${user.email}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">联系方式</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">${user.phoneNum}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">职业</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">${user.job}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">工作单位</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">${user.workPlace}</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">注册时间</label>
                     <div class="col-sm-10">
-                        <p class="form-control-static">${userInfo.localCreateTime}</p>
+                        <p class="form-control-static">${user.localCreateTime}</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">积分</label>
                     <div class="col-sm-10">
-                        <p class="form-control-static">${userInfo.credit}</p>
+                        <p class="form-control-static">${user.credit}</p>
                     </div>
                 </div>
             </form>

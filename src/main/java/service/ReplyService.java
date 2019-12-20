@@ -17,4 +17,6 @@ public interface ReplyService {
 
     //删除某个回复
     int deleteByPrimaryKey(Long id);
+
+    int getReplyUser(Long id);
 }

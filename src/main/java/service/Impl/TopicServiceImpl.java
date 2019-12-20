@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import dao.TopicMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.ls.LSInput;
 import pojo.Topic;
 import service.TopicService;
 
@@ -74,19 +75,17 @@ public class TopicServiceImpl implements TopicService {
         return topicMapper.listEssenceTopics(tabId);
     }
 
-    public List<Topic> listAllStickyTopics() {
-        return  topicMapper.listAllStickyTopics();
-    }
-
-    public List<Topic> listStickyTopics(Integer tabId) {
-        return  topicMapper.listStickyTopics(tabId);
-    }
-
     public int deleteByPrimaryKey(int topicId) {
         return topicMapper.deleteByPrimaryKey(topicId);
     }
 
     public boolean existTopic(Integer topicId) {
         return topicMapper.existTopic(topicId)>0;
+    }
+
+    public List<Topic> showMyTopic(Integer userID){return topicMapper.showMyTopic(userID);}
+
+    public int getTopicUser(Integer topicId) {
+        return topicMapper.getTopicUser(topicId);
     }
 }

@@ -91,6 +91,18 @@
                     <input type="tel" class="form-control" id="tel" name="tel" required="required">
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">职业</label>
+                <div class="col-sm-10" style="width: 40%;">
+                    <input type="tel" class="form-control" id="job" name="job" required="required">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">工作单位</label>
+                <div class="col-sm-10" style="width: 40%;">
+                    <input type="tel" class="form-control" id="workplace" name="workplace" required="required">
+                </div>
+            </div>
             <input type="submit" class="btn btn-default" id="signup" style="margin-left: 17%">
         </form>
     </div>
@@ -103,7 +115,7 @@
         return flag;
     }
     $("#signupForm").submit(function () {
-        if($("#username").val()==''||$("#password").val()==''||$("#email").val()==''||$("#tel").val()==''){
+        if($("#username").val()==''||$("#password").val()==''||$("#email").val()==''||$("#tel").val()==''||$("#job").val()==''||$("#workplace").val()==''){
             alert("请将注册信息填写完整！");
             return submitValidate(false);
         }else {

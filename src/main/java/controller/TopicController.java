@@ -18,6 +18,7 @@ import util.Page;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class TopicController {
         ModelAndView modelAndView=new ModelAndView("cate");
         //获取第1页，10条内容，默认查询总数count
         PageHelper.offsetPage(page.getStart(),page.getCount());
-        //首页全部贴
-        List<Topic> topics = topicService.listTopicsAndUsers();
+        //首页全部主题
+        List<Topic> topics=topicService.listTopicsAndUsers();
         //分页
         int total= (int) new PageInfo<Topic>(topics).getTotal();
         page.setTotal(total);
@@ -84,8 +85,6 @@ public class TopicController {
         }
         //点击量+1
         boolean ifSuccess=topicService.clickAddOne(id);
-        // 获取全部板块
-        List<Tab> tabs = tabService.getAllTabs();
         //获取主题信息
         Topic topic=topicService.selectById(id);
         //获取主题全部评论
@@ -95,7 +94,6 @@ public class TopicController {
         //获取统计信息
         int topicsNum=topicService.getTopicsNum();
         int usersNum=userService.getUserCount();
-
         //获取用户信息
         Integer uid= (Integer) session.getAttribute("userId");
         User user=userService.getUserById(uid);
@@ -103,10 +101,15 @@ public class TopicController {
         List<Topic> hotestTopics=topicService.listMostCommentsTopics();
         //获取访问量
         Integer visitorNum=visitorService.countVisitor();
-
+        if(topic.getBestReplyID()!=null){
+            for(int i=0;i<replies.size();i++){
+                if(replies.get(i).getId()==topic.getBestReplyID()){
+                    Collections.swap(replies,0,i);
+                }
+            }
+        }
         ModelAndView topicPage=new ModelAndView("detail");
         topicPage.addObject("topic", topic);
-        topicPage.addObject("tabs",tabs);
         topicPage.addObject("replies", replies);
         topicPage.addObject("repliesNum",repliesNum);
         topicPage.addObject("topicsNum",topicsNum);
@@ -173,6 +176,7 @@ public class TopicController {
         String title=request.getParameter("title");
         String content=request.getParameter("content");
         Byte tabId=Byte.parseByte(request.getParameter("tab"));
+        System.out.println(tabId);
         //新建topic
         Topic topic=new Topic();
         topic.setUserId(userId);
@@ -181,6 +185,11 @@ public class TopicController {
         topic.setTabId(tabId);
         topic.setCreateTime(new Date());
         topic.setUpdateTime(new Date());
+        if(Integer.parseInt(request.getParameter("tab"))==6){
+              Integer reward=Integer.parseInt(request.getParameter("reward"));
+            topic.setReward(reward);
+        }
+
         //添加topic
         boolean ifSucc=topicService.addTopic(topic);
         userService.addCredit(1,userId);
@@ -273,24 +282,6 @@ public class TopicController {
         topicService.deleteByPrimaryKey(topicId);
         return "redirect:/";
     }
-    //修改主题
-    @RequestMapping("/topic/update/{topicId}")
-    public ModelAndView update(@PathVariable("topicId")Integer topicId,HttpServletRequest request){
-        ModelAndView mv;
-        Topic topic=topicService.selectById(topicId);
-        // 获取修改内容
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        Byte tabId=Byte.parseByte(request.getParameter("tab"));
-        // 修改topic
-        topic.setTitle(title);
-        topic.setContent(content);
-        topic.setTabId(tabId);
-        topicService.updateByPrimaryKeySelective(topic);
-
-        mv=new ModelAndView("redirect:/t/" + topicId);
-        return mv;
-    }
     //给主题取消精品
     @RequestMapping("/topic/cancelEssence/{topicId}")
     public String cancelEssence(@PathVariable("topicId")Integer topicId){
@@ -307,20 +298,30 @@ public class TopicController {
         topicService.updateByPrimaryKeySelective(topic);
         return "redirect:/t/"+topicId;
     }
-    // 给主题置顶
-    @RequestMapping("/topic/addSticky/{topicId}")
-    public String addSticky(@PathVariable("topicId")Integer topicId){
-        Topic topic=topicService.selectById(topicId);
-        topic.setIsSticky(1);
-        topicService.updateByPrimaryKeySelective(topic);
-        return "redirect:/t/"+topicId;
-    }
-    // 给主题取消置顶
-    @RequestMapping("/topic/cancelSticky/{topicId}")
-    public String cancelSticky(@PathVariable("topicId")Integer topicId){
-        Topic topic=topicService.selectById(topicId);
-        topic.setIsSticky(0);
-        topicService.updateByPrimaryKeySelective(topic);
-        return "redirect:/t/"+topicId;
+    @RequestMapping("/showMyTopic")
+    public ModelAndView showMyTopic(HttpSession session,Page page){
+        //获取用户信息
+        Integer uid= (Integer) session.getAttribute("userId");
+        System.out.println(uid);
+        User user=userService.getUserById(uid);
+        //获取统计信息
+        int topicsNum=topicService.getTopicsNum();
+        int usersNum=userService.getUserCount();
+        //获取访问量
+        Integer visitorNum=visitorService.countVisitor();
+        List<Topic> topics=topicService.showMyTopic(uid);
+        PageHelper.offsetPage(page.getStart(),page.getCount());
+        int total= (int) new PageInfo<Topic>(topics).getTotal();
+        page.setTotal(total);
+        ModelAndView mv=new ModelAndView("myTopic");
+        mv.addObject("topics",topics);
+        mv.addObject("user",user);
+        mv.addObject("topicsNum",topicsNum);
+        mv.addObject("usersNum",usersNum);
+        mv.addObject("visitorNum",visitorNum);
+       // mv.addObject("todayVisitor", visitorService.todayVisitor());
+        mv.addObject("unreadMessage", messageService.getUnreadMessageNumOfUser(uid));
+        return mv;
+
     }
 }

@@ -27,6 +27,10 @@ public class User {
 
     private Byte type;
 
+    //职业
+    private String job;
+    //工作单位
+    private String workplace;
 
     public Integer getId() {
         return id;
@@ -107,6 +111,23 @@ public class User {
     public void setType(Byte type) {
         this.type = type;
     }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getWorkPlace() {
+        return workplace;
+    }
+
+    public void setWorkPlace(String workPlace) {
+        this.workplace = workPlace;
+    }
+
 
     public String getLocalCreateTime() {
 

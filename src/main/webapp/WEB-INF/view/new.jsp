@@ -29,13 +29,16 @@
                     <label for="content">正文</label>
                     <textarea class="form-control" rows="10" id="content" name="content"></textarea>
                 </div>
+                <div class="form-group" id="needs">
+
+                </div>
 
                 <div class="form-group">
                     <label for="tab">板块</label><br/>
                     <div class="col-sm-10" style="width: 40%">
                         <select class="form-control" id="tab" name="tab">
                             <c:forEach items="${tabs}" var="tab">
-                            <option value="${tab.id}">${tab.tabName}</option>
+                            <option  value="${tab.id}">${tab.tabName}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -110,13 +113,27 @@
         if($("#title").val()==''){
             alert("请填写标题！");
             return submitValidate(false);
-        }else {
+        }
+        // else if ($("#")) {
+        //
+        // }
+            else {
             var ifSubmit=confirm("确定发表该主题吗?");
             if (ifSubmit == true){
 
             }else {
                 return submitValidate(false);
             }
+        }
+    });
+    
+    $("#tab").change(function () {
+        if($("#tab").val()=="6"){
+            $("#needs").append("<label for=\"title\">积分奖励</label>\n" +
+                "<input type=\"text\" class=\"form-control\" id=\"reward\" name=\"reward\" placeholder=\"为你的需求设置积分奖励\" required=\"required\">");
+        }
+        else {
+            $("#needs").empty();
         }
     })
 </script>

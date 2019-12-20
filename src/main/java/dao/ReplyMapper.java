@@ -26,4 +26,6 @@ public interface ReplyMapper {
 
     int getRepliesNum(Integer id);
 
+    int getReplyUser(Long id);
+
 }
