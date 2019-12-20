@@ -218,7 +218,7 @@
 
   </dependencies>
   <build>
-    <finalName>Genesis</finalName>
+    <finalName>V2Explore</finalName>
     <plugins>
       <!-- jetty插件 -->
       <plugin>

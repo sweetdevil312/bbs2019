@@ -8,7 +8,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <script src="/js/jquery-3.2.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <title>${topic.title} - Genesis </title>
+    <title>${topic.title} - V2Explore </title>
 </head>
 <body>
 <!-- 引入header文件 -->
@@ -20,7 +20,7 @@
             <div class="panel-heading" style="background-color: white">
                 <a href="/">V2Explorer</a> › 主题
             </div>
-            <h3 style="color: black;font-weight: bold"><c:if test="${topic.isSticky==1}"><p style="color: #c9302c;display: inline">[ 置顶 ]</p> </c:if>
+            <h3 style="color: black;font-weight: bold"><c:if test="${topic.isSticky==1}"><p style="color: #2e6da4;display: inline">[ 置顶 ]</p> </c:if>
                 <c:if test="${topic.isEssence==1}"><p style="color: #c9302c;display: inline">[ 精品 ]</p> </c:if>
                 ${topic.title}</h3><br/>
             <div>
@@ -48,7 +48,11 @@
                 </c:if>
                 <c:if test="${user.type==1}">
                     <a id="addSticky" href="/topic/addSticky/${topic.id}">
-                        <p class="btn btn-danger btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">添加置顶&nbsp;&nbsp;</p></a>
+                        <p class="btn btn-warning btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">添加置顶&nbsp;&nbsp;</p></a>
+                </c:if>
+                <c:if test="${(user.type==1)||(user.id==topic.userId)}">
+                    <a data-toggle="modal" data-target="#myModal">
+                        <p class="btn btn-primary btn-xs" style="margin-left:5px;text-align:center;float:right;display: inline">修改主题&nbsp;&nbsp;</p></a>
                 </c:if>
             </div>
         </div>
@@ -62,6 +66,50 @@
             </li>
     </ul>
 </div>
+    <!-- 修改主题 使用模态窗口-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改主题内容
+                    </h4>
+                </div>
+                <div class="modal-body">
+                        <form action="/topic/update/${topic.id}" method="post">
+                            <div class="form-group">
+                                <label for="title">主题标题</label>
+                                <input type="text" class="form-control" id="title" name="title" value="${topic.title}" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="content">正文</label>
+                                <textarea class="form-control" rows="10" id="content" name="content">
+                                    ${topic.content}
+                                </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="tab">板块</label><br/>
+                                <div class="col-sm-10" style="width: 40%">
+                                    <select class="form-control" id="tab" name="tab">
+                                        <c:forEach items="${tabs}" var="tab">
+                                            <option value="${tab.id}">${tab.tabName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div><br>
+                            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消修改
+                    </button>
+                    <input type="submit" class="btn btn-primary" value="提交更改">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <c:if test="${!empty replies}">
 <div class="panel panel-default" id="main" style="">
@@ -122,6 +170,7 @@
 </c:if>
 
 </div>
+
 <div align="center" style="display:block;float: right;margin-right: 30px">
     <!-- 引入侧边栏文件 -->
     <%@ include file="side.jsp"%>
@@ -151,6 +200,22 @@
     })
     $("#addEssence").click(function () {
         var ifSubmit=confirm("确定把该主题添加为精品主题吗?");
+        if (ifSubmit == true){
+
+        }else {
+            return submitValidate(false);
+        }
+    })
+    $("#cancelSticky").click(function () {
+        var ifSubmit=confirm("确定把该主题取消置顶吗?");
+        if (ifSubmit == true){
+
+        }else {
+            return submitValidate(false);
+        }
+    })
+    $("#addSticky").click(function () {
+        var ifSubmit=confirm("确定把该主题置顶吗?");
         if (ifSubmit == true){
 
         }else {

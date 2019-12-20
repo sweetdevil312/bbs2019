@@ -84,6 +84,8 @@ public class TopicController {
         }
         //点击量+1
         boolean ifSuccess=topicService.clickAddOne(id);
+        // 获取全部板块
+        List<Tab> tabs = tabService.getAllTabs();
         //获取主题信息
         Topic topic=topicService.selectById(id);
         //获取主题全部评论
@@ -104,6 +106,7 @@ public class TopicController {
 
         ModelAndView topicPage=new ModelAndView("detail");
         topicPage.addObject("topic", topic);
+        topicPage.addObject("tabs",tabs);
         topicPage.addObject("replies", replies);
         topicPage.addObject("repliesNum",repliesNum);
         topicPage.addObject("topicsNum",topicsNum);
@@ -269,6 +272,24 @@ public class TopicController {
         replyService.deleteByTopicId(topicId);
         topicService.deleteByPrimaryKey(topicId);
         return "redirect:/";
+    }
+    //修改主题
+    @RequestMapping("/topic/update/{topicId}")
+    public ModelAndView update(@PathVariable("topicId")Integer topicId,HttpServletRequest request){
+        ModelAndView mv;
+        Topic topic=topicService.selectById(topicId);
+        // 获取修改内容
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        Byte tabId=Byte.parseByte(request.getParameter("tab"));
+        // 修改topic
+        topic.setTitle(title);
+        topic.setContent(content);
+        topic.setTabId(tabId);
+        topicService.updateByPrimaryKeySelective(topic);
+
+        mv=new ModelAndView("redirect:/t/" + topicId);
+        return mv;
     }
     //给主题取消精品
     @RequestMapping("/topic/cancelEssence/{topicId}")

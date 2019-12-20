@@ -188,10 +188,10 @@
     <insert id="insert" parameterType="pojo.Topic">
         insert into topic(user_id, create_time,
                           update_time, title,
-                          tab_id, content,isEssence,isSticky,)
+                          tab_id, content,isEssence,isSticky)
         values ( #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
                  #{updateTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR},
-                 #{tabId,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR},0)
+                 #{tabId,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR},0,0)
     </insert>
 
     <insert id="insertSelective" parameterType="pojo.Topic">

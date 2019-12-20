@@ -44,6 +44,8 @@ public interface TopicMapper {
     List<Topic> listStickyTopics(Integer tabId);
     //删除主题
     int deleteByPrimaryKey(int topicId);
+    //修改主题
+    int updateByPrimaryKey(int topicId);
     //查看是否帖子存在
     int existTopic(Integer topicId);
 
